@@ -3,32 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
-using UnityTemplateProjects;
 
 public class EnemyController : MonoBehaviour
 {
-    public EnemyDataSO enemyData;
-   
-        
+    public EnamyDataSO enemyData;
+
+    public PatrolRouteManeger myPatrolRoute;
+    
     private float _moveSpeed;
 
     private int _maxHealthPoints;
-        
+
     private GameObject _enemyMesh;
+
+
+    public float FollowDistance => _followDistance;
+    public float _followDistance; //x
     
-    public float ReturnDistance  => _returnDistance;
-    public float _returnDistance;
-    
+    public float ReturnDistance => _returnDistance;
+    public float _returnDistance; //z
     
     public float AttackDistance => _attackDistance;
-    public float _attackDistance;
-    
-    public float FollowDistance => _followDistance;
-    public float _followDistance;
-    
-    public float GiveUpDitance =>_giveUpDistance;
-    public float _giveUpDistance;
+    public float _attackDistance; //y
+
+    public float GeviUpDistance => _geviUpDistance;
+    public float _geviUpDistance; //w
+
 
     private int _currentHealthPoints;
 
@@ -39,19 +39,17 @@ public class EnemyController : MonoBehaviour
 
     private SphereCollider _sphereCollider;
 
-    public PatrolRoute myPatrolRoute;
-
     private void Awake()
     {
         _moveSpeed = enemyData.moveSpeed;
         _maxHealthPoints = enemyData.maxHealthPoints;
 
-       //enemyMesh = Instantiate(enemyData.enemyMesh, transform);
+       // _enemyMesh = Instantiate(enemyData.enemyMesh, transform);
 
         _followDistance = enemyData.followDistance;
         _returnDistance = enemyData.returnDistance;
         _attackDistance = enemyData.attackDistance;
-        _giveUpDistance = enemyData.giveUpDistance;
+        _geviUpDistance = enemyData.geviUpDistance;
 
         _currentHealthPoints = _maxHealthPoints;
         _currentMoveSpeed = _moveSpeed;
@@ -59,6 +57,19 @@ public class EnemyController : MonoBehaviour
         _enemyFSM = GetComponent<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _sphereCollider = GetComponent<SphereCollider>();
+
+    }
+    
+
+    void Start()
+    {
+        
+    }
+
+   
+    void Update()
+    {
+        
     }
 
     public void SetSphereRadius(float value)
@@ -70,8 +81,11 @@ public class EnemyController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log(message:"jogador entrou na area");
+            Debug.Log("Jogador entrou na area");
         }
     }
 }
+
+
+
 
