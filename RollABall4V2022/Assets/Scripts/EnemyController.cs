@@ -73,6 +73,20 @@ public class EnemyController : MonoBehaviour
         _currentPatrolPoint = myPatrolRoute.patrolRoutePoints[_currentPatrolIndex];
     }
 
+    public void Patrulhador()
+    {
+        _navMeshAgent.destination = myPatrolRoute.patrolRoutePoints[_currentPatrolIndex].position;
+        _currentPatrolIndex++;
+
+        if (_currentPatrolIndex == 4)
+        {
+
+            _currentPatrolIndex = 0;
+
+        }
+
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -80,6 +94,11 @@ public class EnemyController : MonoBehaviour
         {
             _enemyFSM.SetFloat("ReturnDistance",
                 Vector3.Distance(transform.position, _currentPatrolPoint.position));
+        }
+
+        if (_navMeshAgent.remainingDistance < 0.1f)
+        {
+            Patrulhador();
         }
     }
 
@@ -97,6 +116,7 @@ public class EnemyController : MonoBehaviour
     public void SetDestinationToPatrol()
     {
         _navMeshAgent.SetDestination(_currentPatrolPoint.position);
+        _currentPatrolIndex = 0;
     }
 
     public void ResetPlayerTransform()
